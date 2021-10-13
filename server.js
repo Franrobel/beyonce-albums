@@ -23,11 +23,13 @@ const albumsData = [
       releaseDate: "2003-06-24T07:00:00Z",
       primaryGenreName: "Pop",
       url:
-        "https://www.youtube.com/embed/ViwtNLUqkMY?rel=0&amp;controls=0&amp;showinfo=0",
+      "https://www.youtube.com/embed/ViwtNLUqkMY?rel=0&amp;controls=0&amp;showinfo=0",
     },
-  ];
-  
-  app.get("/albums", function (req, res) {
+];
+
+app.use(express.json()); // before our routes definition
+ 
+app.get("/albums", function (req, res) {
     res.send(albumsData);
   });
   app.get("/albums/:albumId", (req, res) => {
@@ -35,11 +37,10 @@ const albumsData = [
  const givenId = albumsData.find(album => album.albumId === albumId)
  res.send(givenId)
    })
-
-app.post("/albums", (req, res) => {  
+   app.post("/albums", (req, res) => {  
 
 const albumData = {
-    albumId: albumsData.length+10,
+    albumId: albumsData.length+11,
       artistName: req.body.artistName,
       collectionName: req.body.collectionName,
       artworkUrl100: req.body.artworkUrl100,
@@ -47,9 +48,12 @@ const albumData = {
       primaryGenreName: req.body.primaryGenreName,
       url: req.body.url,
 }
+console.log("albumsData.length: ", albumsData.length);
+console.log("req.body.artistName", req.body.artistName);
     albumsData.push(albumData);
   return res.send(albumData);
 });
+
 app.delete("/albums/:albumId", (req,res)=>{
     const albumId = req.params.albumId
     const index = albumsData.findIndex(album=> album.albumId ===  albumId)
