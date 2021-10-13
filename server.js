@@ -40,7 +40,7 @@ app.get("/albums", function (req, res) {
    app.post("/albums", (req, res) => {  
 
 const albumData = {
-    albumId: albumsData.length+11,
+    albumId: albumsData.length+10 ,
       artistName: req.body.artistName,
       collectionName: req.body.collectionName,
       artworkUrl100: req.body.artworkUrl100,
@@ -48,8 +48,6 @@ const albumData = {
       primaryGenreName: req.body.primaryGenreName,
       url: req.body.url,
 }
-console.log("albumsData.length: ", albumsData.length);
-console.log("req.body.artistName", req.body.artistName);
     albumsData.push(albumData);
   return res.send(albumData);
 });
@@ -59,7 +57,7 @@ app.delete("/albums/:albumId", (req,res)=>{
     const index = albumsData.findIndex(album=> album.albumId ===  albumId)
     const deleted = albumsData.splice(index, 1)
     console.log("album", index);
-    res.send({success: true});
+    res.send({success: true, albumDeleted: deleted});
 })
 
 app.listen(3000, () => console.log("beyonce albums"))
